@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { toast } from 'react-toastify';
+import { BsSearch } from 'react-icons/bs';
 import {
   SearchBtn,
   SearchBtnLabel,
@@ -35,6 +36,7 @@ export class Searchbar extends Component {
         <SearchForm onSubmit={this.handleSubmit}>
           <SearchBtn type="submit">
             <SearchBtnLabel>Search</SearchBtnLabel>
+            <BsSearch />
           </SearchBtn>
 
           <SearchInput
