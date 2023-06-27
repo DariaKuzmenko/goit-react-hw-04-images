@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { BsSearch } from 'react-icons/bs';
 import {
@@ -9,46 +9,42 @@ import {
   SearchInput,
 } from './Searchbar.styled';
 
-export class Searchbar extends Component {
-  state = {
-    searchName: '',
+export const Searchbar = ({ onSubmit }) => {
+  const [searchName, setSearchName] = useState('');
+
+  const handleChange = e => {
+    setSearchName(e.target.value);
   };
 
-  handleChange = e => {
-    this.setState({ searchName: e.target.value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.searchName.trim() === '') {
+    if (searchName.trim() === '') {
       return toast.error('Please enter a search name');
     }
-    this.props.onSubmit(this.state.searchName);
-    this.resetForm();
+    onSubmit(searchName);
+    resetForm();
   };
-  resetForm = () => {
-    this.setState({ searchName: '' });
+  const resetForm = () => {
+    setSearchName('');
   };
 
-  render() {
-    return (
-      <SearchComponent>
-        <SearchForm onSubmit={this.handleSubmit}>
-          <SearchBtn type="submit">
-            <SearchBtnLabel>Search</SearchBtnLabel>
-            <BsSearch />
-          </SearchBtn>
+  return (
+    <SearchComponent>
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchBtn type="submit">
+          <SearchBtnLabel>Search</SearchBtnLabel>
+          <BsSearch />
+        </SearchBtn>
 
-          <SearchInput
-            value={this.state.searchName}
-            onChange={this.handleChange}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </SearchComponent>
-    );
-  }
-}
+        <SearchInput
+          value={searchName}
+          onChange={handleChange}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </SearchForm>
+    </SearchComponent>
+  );
+};
